@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./api:/var/www/html/backend
+    networks:
+      - app-network
+
+  webserver:
+    container_name: webserver
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./api:/var/www/html/backend
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - app-network
+    links:
+      - frontend
+    depends_on:
+      - app
+
+  frontend:
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./docker/nuxt/Dockerfile
+    volumes:
+      - ./frontend:/var/www/html/frontend
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
