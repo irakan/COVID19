@@ -25,6 +25,22 @@ services:
       - frontend
     depends_on:
       - app
+  db:
+    image: 'mysql:8.0'
+    container_name: db
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: dev
+      MYSQL_PASSWORD: secret
+    networks:
+      - app-network
+    volumes:
+      - 'database:/var/lib/mysql'
 
   frontend:
     container_name: frontend
@@ -41,3 +57,7 @@ services:
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  database:
+    driver: local
