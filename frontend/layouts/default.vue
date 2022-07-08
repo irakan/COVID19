@@ -14,6 +14,6 @@
 
 <style>
 html {
-font-family: 'Noto Sans Arabic', sans-serif;
+  font-family: "Noto Sans Arabic", sans-serif;
 }
 </style>
