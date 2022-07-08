@@ -26,6 +26,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "postcss": "^8.4.4",
     "prettier": "^2.7.1",
+    "svgmap": "^2.10.0",
     "vform": "^2.1.2"
   }
 }
