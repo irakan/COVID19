@@ -65,6 +65,7 @@
 import ValidationErrors from "@/components/ValidationErrors";
 
 export default {
+  middleware: "guest",
   components: {
     ValidationErrors,
   },
