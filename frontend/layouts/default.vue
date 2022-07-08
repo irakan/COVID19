@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-screen bg-gray-50">
-    <header class="bg-gray-200 p-6">
+    <header class="bg-white p-6">
       <div class="container mx-auto">
         <NuxtLink to="/">COVID-19</NuxtLink>
       </div>
