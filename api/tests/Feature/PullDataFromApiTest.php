@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Auth;
 
-use App\Models\Covid;
+use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
@@ -43,19 +43,19 @@ class PullDataFromApiTest extends TestCase
 
         $this->json('post', '/api/fill_data');
 
-        $this->assertDatabaseHas('covids', [
+        $this->assertDatabaseHas('countries', [
             'country' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
         ]);
-        $this->assertDatabaseCount('covids', 2);
+        $this->assertDatabaseCount('countries', 2);
     }
 
     /** @test */
     public function update_existing_covid_data_when_api_gets_hit()
     {
-        Covid::factory()->create([
+        Country::factory()->create([
             'country' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
@@ -79,12 +79,12 @@ class PullDataFromApiTest extends TestCase
 
         $this->json('post', '/api/fill_data');
 
-        $this->assertDatabaseHas('covids', [
+        $this->assertDatabaseHas('countries', [
             'country' => 'Afghanistan',
             'total_confirmed' => 1000,
             'total_recovered' => 5,
             'total_deaths' => 2000,
         ]);
-        $this->assertDatabaseCount('covids', 1);
+        $this->assertDatabaseCount('countries', 1);
     }
 }

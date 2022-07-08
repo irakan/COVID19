@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Covid;
+use App\Models\Country;
 use App\Services\CovidAPIService;
 
 class FillDataController extends Controller
@@ -12,7 +12,7 @@ class FillDataController extends Controller
         $countries = $service->getCovidDataByCountry();
 
         foreach ($countries as $country) {
-            Covid::updateOrCreate(
+            Country::updateOrCreate(
                 ['country' => $country['Country']],
                 [
                     'country' => $country['Country'],
