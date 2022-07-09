@@ -11,7 +11,8 @@ class CountryController extends Controller
 {
     public function index(Request $request)
     {
-        $countries = Country::filter($request->only('name'))->paginate(10);
+        $countries = Country::filter($request->only('name', 'order'))
+            ->paginate(10);
 
         return new CountryCollection($countries);
     }

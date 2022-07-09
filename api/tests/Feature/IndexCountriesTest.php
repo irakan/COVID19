@@ -62,4 +62,83 @@ class IndexCountriesTest extends TestCase
             ->assertJsonFragment(['Country' => 'Albania'])
             ->assertJsonCount(1, 'data');
     }
+
+    /** @test */
+    public function countries_are_sorted_by_latest_by_default()
+    {
+        Country::factory()->create([
+            'country' => 'Afghanistan',
+            'total_confirmed' => 183084,
+            'total_recovered' => 0,
+            'total_deaths' => 7727,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Albania',
+            'total_confirmed' => 183084,
+            'total_recovered' => 0,
+            'total_deaths' => 7727,
+        ]);
+
+        $this->json('get', route('countries.index', ['order' => 'total_confirmed_desc']))->assertJson([
+            'data' => [
+                ['Country' => 'Afghanistan'],
+                ['Country' => 'Albania'],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function countries_can_be_sorted_by_total_confirmed_cases_in_desc_order()
+    {
+        Country::factory()->create([
+            'country' => 'Albania',
+            'total_confirmed' => 30,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Afghanistan',
+            'total_confirmed' => 10,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Germany',
+            'total_confirmed' => 20,
+        ]);
+
+        $this->json('get', route('countries.index', ['order' => 'total_confirmed_desc']))->assertJson([
+            'data' => [
+                ['Country' => 'Albania'],
+                ['Country' => 'Germany'],
+                ['Country' => 'Afghanistan'],
+            ],
+        ]);
+    }
+
+    /** @test */
+    public function countries_can_be_sorted_by_total_confirmed_cases_in_asc_order()
+    {
+        Country::factory()->create([
+            'country' => 'Albania',
+            'total_confirmed' => 30,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Afghanistan',
+            'total_confirmed' => 10,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Germany',
+            'total_confirmed' => 20,
+        ]);
+
+        $this->json('get', route('countries.index', ['order' => 'total_confirmed_asc']))->assertJson([
+            'data' => [
+                ['Country' => 'Afghanistan'],
+                ['Country' => 'Germany'],
+                ['Country' => 'Albania'],
+            ],
+        ]);
+    }
 }
