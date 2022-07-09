@@ -39,4 +39,27 @@ class IndexCountriesTest extends TestCase
             'TotalDeaths' => 7727,
         ]);
     }
+
+    /** @test */
+    public function countires_can_be_filtered_by_name()
+    {
+        Country::factory()->create([
+            'country' => 'Afghanistan',
+            'total_confirmed' => 183084,
+            'total_recovered' => 0,
+            'total_deaths' => 7727,
+        ]);
+
+        Country::factory()->create([
+            'country' => 'Albania',
+            'total_confirmed' => 183084,
+            'total_recovered' => 0,
+            'total_deaths' => 7727,
+        ]);
+
+        $this->json('get', route('countries.index', ['name' => 'Albania']))
+            ->assertSuccessful()
+            ->assertJsonFragment(['Country' => 'Albania'])
+            ->assertJsonCount(1, 'data');
+    }
 }

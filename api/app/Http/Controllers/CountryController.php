@@ -8,9 +8,9 @@ use Illuminate\Http\Request;
 
 class CountryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $countries = Country::paginate(10);
+        $countries = Country::filter($request->only('name'))->paginate(10);
 
         return new CountryCollection($countries);
     }

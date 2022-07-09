@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'country',
         'total_confirmed',
@@ -14,5 +16,10 @@ class Country extends Model
         'total_deaths',
     ];
 
-    use HasFactory;
+    public function scopeFilter($query, array $params = [])
+    {
+        if (isset($params['name'])) {
+            $query->where('country', 'like', '%'.$params['name'].'%');
+        }
+    }
 }
