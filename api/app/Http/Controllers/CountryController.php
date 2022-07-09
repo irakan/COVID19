@@ -20,7 +20,8 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'country' => 'required|string',
+            'code' => 'required|string|max:2',
+            'name' => 'required|string',
             'total_confirmed' => 'required|integer',
             'total_recovered' => 'required|integer',
             'total_deaths' => 'required|integer',
@@ -36,7 +37,8 @@ class CountryController extends Controller
         $country = Country::where('id', $id)->firstOrFail();
 
         $data = $request->validate([
-            'country' => 'required|string',
+            'code' => 'required|string|max:2',
+            'name' => 'required|string',
             'total_confirmed' => 'required|integer',
             'total_recovered' => 'required|integer',
             'total_deaths' => 'required|integer',

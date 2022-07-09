@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->string('country');
+            $table->string('name');
+            $table->string('code', 2)->unique()->index()->comment('ISO 3166-1 alpha-2 code');
             $table->unsignedInteger('total_confirmed');
             $table->unsignedInteger('total_recovered');
             $table->unsignedInteger('total_deaths');

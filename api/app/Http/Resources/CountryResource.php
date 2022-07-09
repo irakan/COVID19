@@ -16,10 +16,11 @@ class CountryResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'Country' => $this->country,
-            'TotalConfirmed' => $this->total_confirmed,
-            'TotalRecovered' => $this->total_recovered,
-            'TotalDeaths' => $this->total_deaths,
+            'code' => $this->code,
+            'name' => $this->name,
+            'totalConfirmed' => $this->total_confirmed,
+            'totalRecovered' => $this->total_recovered,
+            'totalDeaths' => $this->total_deaths,
         ];
     }
 

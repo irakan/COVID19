@@ -17,7 +17,8 @@ class CountryFactory extends Factory
     public function definition()
     {
         return [
-            'country' => $this->faker->country,
+            'code' => $this->faker->countryCode,
+            'name' => $this->faker->country,
             'total_confirmed' => $this->faker->numberBetween(0, 1000000),
             'total_recovered' => $this->faker->numberBetween(0, 1000000),
             'total_deaths' => $this->faker->numberBetween(0, 1000000),

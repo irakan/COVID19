@@ -24,7 +24,8 @@ class IndexCountriesTest extends TestCase
     public function needed_countries_data_are_loaded()
     {
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -33,10 +34,11 @@ class IndexCountriesTest extends TestCase
         $response = $this->json('get', route('countries.index'))->assertSuccessful();
 
         $response->assertJsonFragment([
-            'Country' => 'Afghanistan',
-            'TotalConfirmed' => 183084,
-            'TotalRecovered' => 0,
-            'TotalDeaths' => 7727,
+            'code' => 'AF',
+            'name' => 'Afghanistan',
+            'totalConfirmed' => 183084,
+            'totalRecovered' => 0,
+            'totalDeaths' => 7727,
         ]);
     }
 
@@ -44,14 +46,16 @@ class IndexCountriesTest extends TestCase
     public function countires_can_be_filtered_by_name()
     {
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
         ]);
 
         Country::factory()->create([
-            'country' => 'Albania',
+            'code' => 'AL',
+            'name' => 'Albania',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -59,7 +63,7 @@ class IndexCountriesTest extends TestCase
 
         $this->json('get', route('countries.index', ['name' => 'Albania']))
             ->assertSuccessful()
-            ->assertJsonFragment(['Country' => 'Albania'])
+            ->assertJsonFragment(['name' => 'Albania'])
             ->assertJsonCount(1, 'data');
     }
 
@@ -67,14 +71,16 @@ class IndexCountriesTest extends TestCase
     public function countries_are_sorted_by_latest_by_default()
     {
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
         ]);
 
         Country::factory()->create([
-            'country' => 'Albania',
+            'code' => 'AL',
+            'name' => 'Albania',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -82,8 +88,8 @@ class IndexCountriesTest extends TestCase
 
         $this->json('get', route('countries.index', ['order' => 'total_confirmed_desc']))->assertJson([
             'data' => [
-                ['Country' => 'Afghanistan'],
-                ['Country' => 'Albania'],
+                ['name' => 'Afghanistan'],
+                ['name' => 'Albania'],
             ],
         ]);
     }
@@ -92,25 +98,25 @@ class IndexCountriesTest extends TestCase
     public function countries_can_be_sorted_by_total_confirmed_cases_in_desc_order()
     {
         Country::factory()->create([
-            'country' => 'Albania',
+            'name' => 'Albania',
             'total_confirmed' => 30,
         ]);
 
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'name' => 'Afghanistan',
             'total_confirmed' => 10,
         ]);
 
         Country::factory()->create([
-            'country' => 'Germany',
+            'name' => 'Germany',
             'total_confirmed' => 20,
         ]);
 
         $this->json('get', route('countries.index', ['order' => 'total_confirmed_desc']))->assertJson([
             'data' => [
-                ['Country' => 'Albania'],
-                ['Country' => 'Germany'],
-                ['Country' => 'Afghanistan'],
+                ['name' => 'Albania'],
+                ['name' => 'Germany'],
+                ['name' => 'Afghanistan'],
             ],
         ]);
     }
@@ -119,25 +125,25 @@ class IndexCountriesTest extends TestCase
     public function countries_can_be_sorted_by_total_confirmed_cases_in_asc_order()
     {
         Country::factory()->create([
-            'country' => 'Albania',
+            'name' => 'Albania',
             'total_confirmed' => 30,
         ]);
 
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'name' => 'Afghanistan',
             'total_confirmed' => 10,
         ]);
 
         Country::factory()->create([
-            'country' => 'Germany',
+            'name' => 'Germany',
             'total_confirmed' => 20,
         ]);
 
         $this->json('get', route('countries.index', ['order' => 'total_confirmed_asc']))->assertJson([
             'data' => [
-                ['Country' => 'Afghanistan'],
-                ['Country' => 'Germany'],
-                ['Country' => 'Albania'],
+                ['name' => 'Afghanistan'],
+                ['name' => 'Germany'],
+                ['name' => 'Albania'],
             ],
         ]);
     }

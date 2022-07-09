@@ -24,12 +24,14 @@ class PullDataFromApiTest extends TestCase
             'https://api.covid19api.com/summary' => Http::response([
                 'Countries' => [
                     [
+                        'CountryCode' => 'AF',
                         'Country' => 'Afghanistan',
                         'TotalConfirmed' => 183084,
                         'TotalRecovered' => 0,
                         'TotalDeaths' => 7727,
                     ],
                     [
+                        'CountryCode' => 'AL',
                         'Country' => 'Albania',
                         'TotalConfirmed' => 8056,
                         'TotalRecovered' => 0,
@@ -44,7 +46,8 @@ class PullDataFromApiTest extends TestCase
         $this->json('post', '/api/fill_data');
 
         $this->assertDatabaseHas('countries', [
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -56,7 +59,8 @@ class PullDataFromApiTest extends TestCase
     public function update_existing_covid_data_when_api_gets_hit()
     {
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -66,6 +70,7 @@ class PullDataFromApiTest extends TestCase
             'https://api.covid19api.com/summary' => Http::response([
                 'Countries' => [
                     [
+                        'CountryCode' => 'AF',
                         'Country' => 'Afghanistan',
                         'TotalConfirmed' => 1000,
                         'TotalRecovered' => 5,
@@ -80,7 +85,8 @@ class PullDataFromApiTest extends TestCase
         $this->json('post', '/api/fill_data');
 
         $this->assertDatabaseHas('countries', [
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 1000,
             'total_recovered' => 5,
             'total_deaths' => 2000,

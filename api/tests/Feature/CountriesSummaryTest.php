@@ -14,7 +14,8 @@ class CountriesSummaryTest extends TestCase
     public function countries_summary_data_are_loaded()
     {
         Country::factory()->create([
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -23,10 +24,11 @@ class CountriesSummaryTest extends TestCase
         $response = $this->json('get', route('countries.summary'))->assertSuccessful();
 
         $response->assertJsonFragment([
-            'Country' => 'Afghanistan',
-            'TotalConfirmed' => 183084,
-            'TotalRecovered' => 0,
-            'TotalDeaths' => 7727,
+            'code' => 'AF',
+            'name' => 'Afghanistan',
+            'totalConfirmed' => 183084,
+            'totalRecovered' => 0,
+            'totalDeaths' => 7727,
         ]);
     }
 }

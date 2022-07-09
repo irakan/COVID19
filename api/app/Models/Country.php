@@ -10,7 +10,8 @@ class Country extends Model
     use HasFactory;
 
     protected $fillable = [
-        'country',
+        'code',
+        'name',
         'total_confirmed',
         'total_recovered',
         'total_deaths',
@@ -19,7 +20,7 @@ class Country extends Model
     public function scopeFilter($query, array $params = [])
     {
         if (isset($params['name'])) {
-            $query->where('country', 'like', '%'.$params['name'].'%');
+            $query->where('name', 'like', '%'.$params['name'].'%');
         }
 
         if (isset($params['order'])) {

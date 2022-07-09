@@ -26,14 +26,16 @@ class UpdateCountriesTest extends TestCase
         $country = Country::factory()->create();
 
         $this->json('patch', route('countries.update', $country), [
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
         ])->assertSuccessful();
 
         $this->assertDatabaseHas('countries', [
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
@@ -48,17 +50,19 @@ class UpdateCountriesTest extends TestCase
         $country = Country::factory()->create();
 
         $this->json('patch', route('countries.update', $country), [
-            'country' => 'Afghanistan',
+            'code' => 'AF',
+            'name' => 'Afghanistan',
             'total_confirmed' => 183084,
             'total_recovered' => 0,
             'total_deaths' => 7727,
         ])->assertExactJson([
             'data' => [
                 'id' => $country->id,
-                'Country' => 'Afghanistan',
-                'TotalConfirmed' => 183084,
-                'TotalRecovered' => 0,
-                'TotalDeaths' => 7727,
+                'code' => 'AF',
+                'name' => 'Afghanistan',
+                'totalConfirmed' => 183084,
+                'totalRecovered' => 0,
+                'totalDeaths' => 7727,
             ],
             'status' => 'success',
         ]);
@@ -80,11 +84,11 @@ class UpdateCountriesTest extends TestCase
     public function InvalidInputsProvider()
     {
         return [
-            'empty_country' => ['country', ''],
+            'empty_country_name' => ['name', ''],
             'empty_total_confirmed' => ['total_confirmed', ''],
             'empty_total_recovered' => ['total_recovered', ''],
 
-            'invalid_country' => ['country', 123456],
+            'invalid_country_name' => ['name', 123456],
             'invalid_total_confirmed' => ['total_confirmed', 'abc'],
             'invalid_total_recovered' => ['total_recovered', 'abc'],
             'invalid_total_deaths' => ['total_deaths', 'abc'],

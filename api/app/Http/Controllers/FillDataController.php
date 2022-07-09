@@ -13,9 +13,10 @@ class FillDataController extends Controller
 
         foreach ($countries as $country) {
             Country::updateOrCreate(
-                ['country' => $country['Country']],
+                ['code' => $country['CountryCode']],
                 [
-                    'country' => $country['Country'],
+                    'code' => $country['CountryCode'],
+                    'name' => $country['Country'],
                     'total_confirmed' => $country['TotalConfirmed'],
                     'total_recovered' => $country['TotalRecovered'],
                     'total_deaths' => $country['TotalDeaths'],
