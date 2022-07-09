@@ -93,4 +93,32 @@ class PullDataFromApiTest extends TestCase
         ]);
         $this->assertDatabaseCount('countries', 1);
     }
+
+    /** @test */
+    public function return_success_response()
+    {
+        $this->login();
+
+        Http::fake([
+            'https://api.covid19api.com/summary' => Http::response([
+                'Countries' => [
+                    [
+                        'CountryCode' => 'AF',
+                        'Country' => 'Afghanistan',
+                        'TotalConfirmed' => 1000,
+                        'TotalRecovered' => 5,
+                        'TotalDeaths' => 2000,
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->json('post', '/api/fill_data');
+
+        $response->assertSuccessful();
+        $response->assertJsonFragment([
+            'message' => 'Api data filled successfully',
+            'status' => 'success',
+        ]);
+    }
 }

@@ -23,5 +23,10 @@ class FillDataController extends Controller
                 ]
             );
         }
+
+        return response()->json([
+            'message' => 'Api data filled successfully',
+            'status' => 'success',
+        ]);
     }
 }
