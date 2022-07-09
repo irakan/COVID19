@@ -37,6 +37,8 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
 
+  plugins: ["@/plugins/api.js"],
+
   auth: {
     strategies: {
       laravelSanctum: {
@@ -56,5 +58,10 @@ export default {
     display: "swap",
     download: true,
     overwriting: true,
+  },
+
+  axios: {
+    baseURL: "http://localhost",
+    credentials: true,
   },
 };
