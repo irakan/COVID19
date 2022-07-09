@@ -32,6 +32,17 @@ class CountryController extends Controller
 
     public function update(Request $request, $id)
     {
-        //
+        $country = Country::where('id', $id)->firstOrFail();
+
+        $data = $request->validate([
+            'country' => 'required|string',
+            'total_confirmed' => 'required|integer',
+            'total_recovered' => 'required|integer',
+            'total_deaths' => 'required|integer',
+        ]);
+
+        $country->update($data);
+
+        return CountryResource::make($country);
     }
 }
