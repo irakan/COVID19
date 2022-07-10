@@ -22,6 +22,7 @@ class CountryCollection extends ResourceCollection
     public function with($request)
     {
         return [
+            'filters' => request()->query(),
             'status' => 'success',
         ];
     }

@@ -1,17 +1,28 @@
 <template>
-  <div class="container flex flex-col lg:flex-row mx-auto py-16 h-full">
-    <aside class="bg-gray-200 mx-4 lg:mx-0 px-4 py-6">
-      <CountriesFilter />
+  <div class="container mx-auto lg:flex lg:h-full lg:p-12 px-8 py-4">
+    <aside class="flex flex-col lg:w-3/12 bg-white rounded-lg shadow">
+      <div
+        class="text-center bg-gray-200 rounded-t-lg px-6 py-3 text-gray-500 text-sm font-semibold"
+      >
+        تصفية قائمة الدول
+      </div>
+
+      <CountriesFilter
+        v-if="countries"
+        :filters="countries.filters"
+        @apply="filterCountries($event)"
+        @reset="filterCountries(null)"
+      />
     </aside>
 
-    <div class="overflow-x-auto mx-4 lg:mx-12 mt-6 lg:mt-0">
-      <div class="align-middle inline-block min-w-full h-full">
+    <div class="w-full h-full bg-white rounded-lg shadow lg:mx-4 mt-8 lg:mt-0">
+      <div class="overflow-x-auto rounded-lg">
         <div
           v-if="countries"
-          class="shadow overflow-hidden border border-gray-200 rounded-lg bg-white h-full"
+          class="align-middle inline-block min-w-full overflow-hidden"
         >
           <table class="min-w-full lg:w-full table-fixed">
-            <thead class="bg-gray-100">
+            <thead class="bg-gray-200">
               <tr>
                 <th
                   scope="col"
@@ -74,7 +85,7 @@
               </tr>
             </tbody>
           </table>
-          <div class="flex justify-center px-8 py-4 text-gray-500">
+          <div class="flex justify-center px-8 py-8 text-gray-500">
             <PaginationLinks
               :meta="countries.meta"
               @page-change="loadPageCountries($event)"
@@ -99,7 +110,16 @@ export default {
   },
   methods: {
     async loadPageCountries(page) {
-      this.countries = await this.$api.countries.index({ page: page });
+      this.countries = await this.$api.countries.index({
+        ...this.countries?.filters,
+        page: page,
+      });
+    },
+    async filterCountries(filters) {
+      this.countries = await this.$api.countries.index({
+        ...filters,
+        page: 1,
+      });
     },
   },
 };
