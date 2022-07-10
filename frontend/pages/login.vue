@@ -11,7 +11,7 @@
             v-model="form.email"
             type="email"
             name="email"
-            class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 appearance-none"
+            class="bg-gray-50 border-2 border-gray-300 w-full rounded-lg focus:border-green-500 focus:bg-transparent py-2 px-3 outline-none appearance-none text-gray-600"
             required
           />
         </div>
@@ -23,14 +23,14 @@
             v-model="form.password"
             type="password"
             name="password"
-            class="block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-green-500 focus:border-green-500 appearance-none"
+            class="bg-gray-50 border-2 border-gray-300 w-full rounded-lg focus:border-green-500 focus:bg-transparent py-2 px-3 outline-none appearance-none text-gray-600"
             required
           />
         </div>
         <div>
           <button
             type="submit"
-            class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-2 px-3 w-full"
+            class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-3 px-5 w-full"
           >
             <span v-if="!processing">الدخول</span>
             <svg
