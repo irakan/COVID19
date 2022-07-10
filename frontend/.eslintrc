@@ -3,5 +3,15 @@
     "eslint:recommended",
     "plugin:vue/vue3-recommended",
     "plugin:prettier/recommended"
-  ]
+  ],
+  "rules": {
+      "vue/html-self-closing": [
+          "error",
+          {
+              "html": {
+                  "void": "any"
+              }
+          }
+      ]
+  }
 }

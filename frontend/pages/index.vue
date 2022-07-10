@@ -5,8 +5,8 @@
         v-if="mapDataOptions"
         :map-data-options="mapDataOptions"
         :custom-tooltip-function="customTooltip"
-      ></WorldMap>
-      <div v-else class="svgMap-map-empty-div"></div>
+      />
+      <div v-else class="svgMap-map-empty-div" />
     </div>
     <div class="p-8 max-w-lg mx-auto mt-12">
       <NuxtLink

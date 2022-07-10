@@ -1,6 +1,8 @@
 <template>
   <div class="container flex flex-col lg:flex-row mx-auto py-16 h-full">
-    <aside class="bg-gray-200 mx-4 lg:mx-0 px-4 py-6">filters</aside>
+    <aside class="bg-gray-200 mx-4 lg:mx-0 px-4 py-6">
+      <CountriesFilter />
+    </aside>
 
     <div class="overflow-x-auto mx-4 lg:mx-12 mt-6 lg:mt-0">
       <div class="align-middle inline-block min-w-full h-full">
@@ -49,19 +51,19 @@
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                   v-text="country.name"
-                ></td>
+                />
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                   v-text="country.totalConfirmed.toLocaleString('en')"
-                ></td>
+                />
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                   v-text="country.totalRecovered.toLocaleString('en')"
-                ></td>
+                />
                 <td
                   class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"
                   v-text="country.totalDeaths.toLocaleString('en')"
-                ></td>
+                />
                 <td
                   class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                 >
