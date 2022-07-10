@@ -23,6 +23,9 @@ export default {
       map: null,
     };
   },
+  mounted() {
+    this.initMap();
+  },
   methods: {
     initMap() {
       let self = this;
@@ -38,9 +41,6 @@ export default {
         },
       });
     },
-  },
-  mounted() {
-    this.initMap();
   },
 };
 </script>

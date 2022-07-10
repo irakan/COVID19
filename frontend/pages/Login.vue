@@ -32,7 +32,7 @@
             type="submit"
             class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-2 px-3 w-full"
           >
-            <span v-if="!this.processing">الدخول</span>
+            <span v-if="!processing">الدخول</span>
             <svg
               v-else
               class="animate-spin -ml-1 mr-3 h-6 w-5 text-white"
@@ -65,10 +65,11 @@
 import ValidationErrors from "@/components/ValidationErrors";
 
 export default {
-  middleware: "guest",
+  name: "LoginPage",
   components: {
     ValidationErrors,
   },
+  middleware: "guest",
   data() {
     return {
       form: {

@@ -23,25 +23,35 @@
 import countriesAR from "@/data/countriesAR";
 
 export default {
+  name: "IndexPage",
   data() {
     return {
       countriesSummary: {},
       mapDataOptions: null,
     };
   },
+  async mounted() {
+    let self = this;
+    const response = await this.$api.countries.summary();
+
+    response.data.map((country) => {
+      self.countriesSummary[country.code] = {
+        code: country.code,
+        name: country.name,
+        totalConfirmed: country.totalConfirmed,
+        totalRecovered: country.totalRecovered,
+        totalDeaths: country.totalDeaths,
+      };
+    });
+    this.setWorldMapData();
+  },
   methods: {
     setWorldMapData() {
       this.mapDataOptions = {
         data: {
-          totalConfirmed: {
-            name: "الحالات المؤكدة (Total Confirmed):",
-          },
-          totalRecovered: {
-            name: "الحالات المؤكدة (Total Confirmed):",
-          },
-          totalDeaths: {
-            name: "الحالات المؤكدة (Total Confirmed):",
-          },
+          totalConfirmed: {},
+          totalRecovered: {},
+          totalDeaths: {},
         },
         applyData: "totalConfirmed",
         values: this.countriesSummary,
@@ -84,21 +94,6 @@ export default {
 
       tooltipDiv.innerHTML = innerHTML;
     },
-  },
-  async mounted() {
-    let self = this;
-    const response = await this.$api.countries.summary();
-
-    response.data.map((country) => {
-      self.countriesSummary[country.code] = {
-        code: country.code,
-        name: country.name,
-        totalConfirmed: country.totalConfirmed,
-        totalRecovered: country.totalRecovered,
-        totalDeaths: country.totalDeaths,
-      };
-    });
-    this.setWorldMapData();
   },
 };
 </script>
