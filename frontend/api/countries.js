@@ -13,7 +13,7 @@ export default ($axios) => ({
     return await $axios.$patch("/api/countries/" + params.id, params);
   },
 
-  async summary(params) {
+  async summary() {
     return await $axios.$get("/api/countries/summary");
   },
 });
