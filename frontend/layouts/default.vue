@@ -1,8 +1,13 @@
 <template>
   <div class="flex flex-col h-screen bg-gray-50">
     <header class="bg-white p-6">
-      <div class="container mx-auto">
+      <div class="container mx-auto flex justify-between items-center">
         <NuxtLink to="/">COVID-19</NuxtLink>
+        <NuxtLink
+          to="/login"
+          class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-3 px-5"
+          >تسجيل الدخول</NuxtLink
+        >
       </div>
     </header>
     <main class="flex-1 mx-auto w-full">
