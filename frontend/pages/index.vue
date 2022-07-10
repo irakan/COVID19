@@ -63,7 +63,7 @@ export default {
       // Country values
       if (countryValues) {
         innerHTML +=
-          "<div class='flex justify-between items-center w-full py-2 text-sm'><div>مجموع حالات كورونا المؤكدة (Total Confirmed)</div><div>" +
+          "<div class='flex justify-between items-center w-full py-2 text-sm'><div>مجموع الحالات المؤكدة (Total Confirmed)</div><div>" +
           (countryValues.totalConfirmed.toLocaleString("en") ?? "غير معروف") +
           "</div></div>";
         innerHTML +=
