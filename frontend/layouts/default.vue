@@ -19,7 +19,10 @@ export default {
 </script>
 
 <style>
-html {
+html,
+body {
+  height: 100%;
+  width: 100%;
   font-family: "Noto Sans Arabic", sans-serif;
 }
 </style>
