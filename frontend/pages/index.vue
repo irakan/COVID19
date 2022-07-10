@@ -6,7 +6,7 @@
         :map-data-options="mapDataOptions"
         :custom-tooltip-function="customTooltip"
       ></WorldMap>
-      <div v-else style="padding-top: 30%"></div>
+      <div v-else class="svgMap-map-empty-div"></div>
     </div>
     <div class="p-8 max-w-lg mx-auto mt-12">
       <button
@@ -102,3 +102,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.svgMap-map-empty-div {
+  padding-top: 30%;
+}
+
+@media (max-width: 575.98px) {
+  .svgMap-map-empty-div {
+    padding-top: 100%;
+  }
+}
+</style>
