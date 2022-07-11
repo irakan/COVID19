@@ -106,6 +106,7 @@ export default {
   components: {
     ValidationErrors,
   },
+  middleware: ["auth"],
   data() {
     return {
       form: {
