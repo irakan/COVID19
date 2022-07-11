@@ -35,7 +35,7 @@ export default {
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next"],
+  modules: ["@nuxtjs/axios", "@nuxtjs/auth-next", "@nuxtjs/toast"],
 
   auth: {
     strategies: {
@@ -61,5 +61,8 @@ export default {
   axios: {
     baseURL: "http://localhost",
     credentials: true,
+  },
+  toast: {
+    duration: 5000,
   },
 };
