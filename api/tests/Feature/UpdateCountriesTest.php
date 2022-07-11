@@ -74,7 +74,9 @@ class UpdateCountriesTest extends TestCase
      */
     public function a_user_can_not_update_a_country_with_invalid_inputs($input, $value)
     {
-        $country = Country::factory()->create();
+        Country::factory()->create(['code' => 'AF']);
+
+        $country = Country::factory()->create(['code' => 'US']);
 
         $this->login();
 
@@ -92,6 +94,9 @@ class UpdateCountriesTest extends TestCase
             'invalid_total_confirmed' => ['total_confirmed', 'abc'],
             'invalid_total_recovered' => ['total_recovered', 'abc'],
             'invalid_total_deaths' => ['total_deaths', 'abc'],
+
+            'country_code_must_be_2_characters' => ['code', 'AFGH'],
+            'country_code_must_not_be_taken_by_another_country' => ['code', 'AF'],
         ];
     }
 }

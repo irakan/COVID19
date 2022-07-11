@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -67,6 +68,7 @@ class CreateCountriesTest extends TestCase
      */
     public function a_user_can_not_create_a_country_with_invalid_inputs($input, $value)
     {
+        Country::factory()->create(['code' => 'AF']);
         $this->login();
 
         $this->json('post', 'api/countries', [$input => $value])->assertJsonValidationErrors($input);
@@ -83,6 +85,9 @@ class CreateCountriesTest extends TestCase
             'invalid_total_confirmed' => ['total_confirmed', 'abc'],
             'invalid_total_recovered' => ['total_recovered', 'abc'],
             'invalid_total_deaths' => ['total_deaths', 'abc'],
+
+            'country_code_must_be_unique' => ['code', 'AF'],
+            'country_code_must_be_2_characters' => ['code', 'AFGH'],
         ];
     }
 }
