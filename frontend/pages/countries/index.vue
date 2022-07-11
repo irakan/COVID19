@@ -1,11 +1,13 @@
 <template>
-  <div class="container mx-auto lg:h-full lg:p-5 px-8 py-4">
+  <div
+    class="container mx-auto flex flex-col lg:h-full lg:p-5 px-8 py-4 relative"
+  >
     <div
       v-if="$auth.loggedIn"
       class="flex justify-end items-center lg:mx-4 mb-3"
     >
       <NuxtLink
-        to="/"
+        to="/countries/create"
         class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-3 px-5 mx-2"
         >إضافة دولة</NuxtLink
       >
@@ -15,7 +17,7 @@
         >تعبئة البيانات</NuxtLink
       >
     </div>
-    <div class="lg:flex">
+    <div class="lg:flex h-full">
       <aside class="flex flex-col lg:w-3/12 bg-white rounded-lg shadow">
         <div
           class="text-center bg-gray-200 rounded-t-lg px-6 py-3 text-gray-500 text-sm font-semibold"
@@ -110,6 +112,7 @@
             </table>
             <div class="flex justify-center px-8 py-8 text-gray-500">
               <PaginationLinks
+                v-if="countries.data.length > 0"
                 :meta="countries.meta"
                 @page-change="loadPageCountries($event)"
               />
