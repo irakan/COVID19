@@ -16,4 +16,8 @@ export default ($axios) => ({
   async summary() {
     return await $axios.$get("/api/countries/summary");
   },
+
+  async fill() {
+    return await $axios.$post("/api/fill_data");
+  },
 });

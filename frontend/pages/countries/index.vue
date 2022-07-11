@@ -11,10 +11,11 @@
         class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-3 px-5 mx-2"
         >إضافة دولة</NuxtLink
       >
-      <NuxtLink
-        to="/"
+      <a
+        href="#"
         class="inline-flex justify-center items-center bg-green-600 hover:bg-green-700 hover:border-green-700 rounded text-white border-green-600 font-semibold shadow focus:outline-none py-3 px-5"
-        >تعبئة البيانات</NuxtLink
+        @click.prevent="fillData"
+        >تعبئة البيانات</a
       >
     </div>
     <div class="lg:flex h-full">
@@ -136,6 +137,15 @@ export default {
     this.countries = await this.$api.countries.index();
   },
   methods: {
+    async fillData() {
+      try {
+        this.$toast.show("جاري تعبئة البيانات...");
+        await this.$api.countries.fill();
+        this.$toast.success("تم تعبئة البيانات  بنجاح.");
+      } catch (e) {
+        this.$toast.error(e.message);
+      }
+    },
     async loadPageCountries(page) {
       this.countries = await this.$api.countries.index({
         ...this.countries?.filters,
