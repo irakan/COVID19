@@ -162,9 +162,12 @@ export default {
     async fillData() {
       this.fillingData = true;
       try {
-        this.$toast.show("جاري تعبئة البيانات...");
-        await this.$api.countries.fill();
-        this.$toast.success("تم تعبئة البيانات  بنجاح.");
+        const response = await this.$api.countries.fill();
+        if (response.status === "success") {
+          this.$toast.success(response.message);
+        } else {
+          this.$toast.show(response.message);
+        }
       } catch (e) {
         this.$toast.error(e.message);
       } finally {
