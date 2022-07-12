@@ -17,6 +17,11 @@ class CountryController extends Controller
         return new CountryCollection($countries);
     }
 
+    public function show(Country $country)
+    {
+        return new CountryResource($country);
+    }
+
     public function store(Request $request)
     {
         $data = $request->validate([

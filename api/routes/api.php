@@ -14,6 +14,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/fill_data', FillDataController::class);
 
     Route::post('countries', [CountryController::class, 'store'])->name('countries.store');
+    Route::get('countries/{country}', [CountryController::class, 'show'])->name('countries.show');
     Route::patch('countries/{country}', [CountryController::class, 'update'])->name('countries.update');
 });
 
