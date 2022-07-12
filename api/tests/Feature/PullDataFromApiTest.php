@@ -2,9 +2,11 @@
 
 namespace Tests\Feature;
 
+use App\Jobs\FillCountriesData;
 use App\Models\Country;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class PullDataFromApiTest extends TestCase
@@ -95,8 +97,36 @@ class PullDataFromApiTest extends TestCase
     }
 
     /** @test */
+    public function a_job_is_pushed_to_a_the_queue()
+    {
+        Queue::fake();
+        $this->login();
+
+        $this->json('post', '/api/fill_data')->assertSuccessful();
+
+        Queue::assertPushed(FillCountriesData::class);
+    }
+
+    /** @test */
+    public function return_fail_response_if_queue_already_has_job()
+    {
+        $queue = Queue::partialMock();
+
+        $queue->shouldReceive('size')->andReturn(1);
+
+        $this->login();
+
+        $this->json('post', '/api/fill_data')->assertJson([
+            'status' => 'fail',
+            'message' => 'لا زال يتم العمل على تعبئة البيانات.',
+        ]);
+    }
+
+    /** @test */
     public function return_success_response()
     {
+        Queue::fake();
+
         $this->login();
 
         Http::fake([
@@ -117,7 +147,7 @@ class PullDataFromApiTest extends TestCase
 
         $response->assertSuccessful();
         $response->assertJsonFragment([
-            'message' => 'Api data filled successfully',
+            'message' => 'تم إرسال طلب لتعبئة البيانات في الخلفية.',
             'status' => 'success',
         ]);
     }

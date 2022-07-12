@@ -2,30 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Country;
+use App\Jobs\FillCountriesData;
 use App\Services\CovidAPIService;
+use Illuminate\Support\Facades\Queue;
 
 class FillDataController extends Controller
 {
     public function __invoke(CovidAPIService $service)
     {
-        $countries = $service->getCovidDataByCountry();
-
-        foreach ($countries as $country) {
-            Country::updateOrCreate(
-                ['code' => $country['CountryCode']],
-                [
-                    'code' => $country['CountryCode'],
-                    'name' => $country['Country'],
-                    'total_confirmed' => $country['TotalConfirmed'],
-                    'total_recovered' => $country['TotalRecovered'],
-                    'total_deaths' => $country['TotalDeaths'],
-                ]
-            );
+        if (Queue::size('default') > 0) {
+            return response()->json([
+                'message' => 'لا زال يتم العمل على تعبئة البيانات.',
+                'status' => 'fail',
+            ]);
         }
 
+        FillCountriesData::dispatch($service);
+
         return response()->json([
-            'message' => 'Api data filled successfully',
+            'message' => 'تم إرسال طلب لتعبئة البيانات في الخلفية.',
             'status' => 'success',
         ]);
     }
