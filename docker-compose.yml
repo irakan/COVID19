@@ -1,19 +1,11 @@
 version: '3'
 
 services:
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: ./docker/php/Dockerfile
-    volumes:
-      - ./api:/var/www/html/backend
-    networks:
-      - app-network
 
   webserver:
     container_name: webserver
     image: nginx
+    restart: unless-stopped
     ports:
       - "80:80"
     volumes:
@@ -25,6 +17,36 @@ services:
       - frontend
     depends_on:
       - app
+      - db
+      - redis
+      - supervisor
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./api:/var/www/html/backend
+    networks:
+      - app-network
+
+  supervisor:
+    build:
+      context: .
+      dockerfile: ./docker/supervisor/Dockerfile
+    container_name: supervisor
+    volumes:
+      - ./api:/var/www/html/backend
+      - ./docker/supervisor/conf.d:/etc/supervisor/conf.d
+      - ./docker/supervisor/logs:/var/log
+    depends_on:
+      - app
+      - db
+      - redis
+    networks:
+      - app-network
+    
   db:
     image: 'mysql:8.0'
     container_name: db
@@ -54,10 +76,24 @@ services:
     networks:
       - app-network
 
+  redis:
+    container_name: redis
+    image: redis:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    volumes:
+      - 'redis:/var/lib/redis'
+
 networks:
   app-network:
     driver: bridge
 
 volumes:
   database:
+    driver: local
+  redis:
     driver: local
