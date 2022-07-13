@@ -5,12 +5,16 @@ export default ($axios) => ({
     });
   },
 
+  async show(id) {
+    return await $axios.$get("/api/countries/" + id);
+  },
+
   async store(params) {
     return await $axios.$post("/api/countries", params);
   },
 
-  async update(params) {
-    return await $axios.$patch("/api/countries/" + params.id, params);
+  async update(id, params) {
+    return await $axios.$patch("/api/countries/" + id, params);
   },
 
   async summary() {
