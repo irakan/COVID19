@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen bg-gray-100">
+  <div class="flex flex-col bg-gray-100 h-full">
     <header class="bg-white p-6">
       <div class="container mx-auto flex justify-between items-center">
         <NuxtLink to="/">COVID-19</NuxtLink>
@@ -32,7 +32,9 @@ export default {
 
 <style>
 html,
-body {
+body,
+#__nuxt,
+#__layout {
   height: 100%;
   width: 100%;
   font-family: "Noto Sans Arabic", sans-serif;

@@ -1,6 +1,6 @@
 <template>
-  <div class="flex flex-col items-center justify-center h-full my-auto">
-    <div class="text-center text-gray-500 py-4 text-lg">
+  <div class="flex flex-col items-center justify-center h-full my-auto p-8">
+    <div class="text-center text-gray-500 py-4 text-md lg:text-lg">
       إنشاء دولة مع أرقام الحالات لفيروس COVID-19.
     </div>
     <div class="max-w-lg w-full space-y-8 bg-white p-8 shadow rounded-lg">
