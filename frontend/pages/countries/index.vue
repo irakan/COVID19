@@ -125,19 +125,24 @@
                     v-if="$auth.loggedIn"
                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium"
                   >
-                    <a href="#" class="text-gray-400 hover:text-gray-600"
-                      >تعديل</a
+                    <NuxtLink
+                      :to="'/countries/' + country.id + '/edit'"
+                      class="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium leading-5 text-white bg-gray-400 hover:bg-gray-500 focus:outline-none focus:shadow-outline"
+                      >تعديل</NuxtLink
                     >
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div class="flex justify-center px-8 py-8 text-gray-500">
+            <div class="flex justify-center px-8 py-4 text-gray-500">
               <PaginationLinks
                 v-if="countries.data.length > 0"
                 :meta="countries.meta"
                 @page-change="loadPageCountries($event)"
               />
+              <div v-else class="text-center text-gray-500">
+                لا توجد بيانات.
+              </div>
             </div>
           </div>
         </div>
