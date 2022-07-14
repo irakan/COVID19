@@ -2,56 +2,32 @@ version: '3'
 
 services:
 
-  webserver:
-    container_name: webserver
-    image: nginx
-    restart: unless-stopped
-    ports:
-      - "80:80"
-    volumes:
-      - ./api:/var/www/html/backend
-      - ./docker/nginx:/etc/nginx/conf.d
-    networks:
-      - app-network
-    links:
-      - frontend
-    depends_on:
-      - app
-      - db
-      - redis
-      - supervisor
-
   app:
     container_name: app
     build:
       context: .
-      dockerfile: ./docker/php/Dockerfile
+      dockerfile: ./docker/php-nginx/Dockerfile
     volumes:
-      - ./api:/var/www/html/backend
+      - ./api/storage:/app/storage
+    ports:
+      - "80:80"
     networks:
       - app-network
 
-  supervisor:
+  frontend:
+    container_name: frontend
     build:
       context: .
-      dockerfile: ./docker/supervisor/Dockerfile
-    container_name: supervisor
-    volumes:
-      - ./api:/var/www/html/backend
-      - ./docker/supervisor/conf.d:/etc/supervisor/conf.d
-      - ./docker/supervisor/logs:/var/log
-    depends_on:
-      - app
-      - db
-      - redis
+      dockerfile: ./docker/nuxt/Dockerfile
+    ports:
+      - "3000:3000"
     networks:
       - app-network
-    
+   
   db:
     image: 'mysql:8.0'
     container_name: db
     restart: unless-stopped
-    tty: true
     ports:
       - "3306:3306"
     environment:
@@ -62,25 +38,10 @@ services:
     volumes:
       - 'database:/var/lib/mysql'
 
-  frontend:
-    container_name: frontend
-    build:
-      context: .
-      dockerfile: ./docker/nuxt/Dockerfile
-    volumes:
-      - ./frontend:/var/www/html/frontend
-    ports:
-      - "3000:3000"
-    depends_on:
-      - app
-    networks:
-      - app-network
-
   redis:
     container_name: redis
     image: redis:alpine
     restart: unless-stopped
-    tty: true
     ports:
       - "6379:6379"
     networks:
