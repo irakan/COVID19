@@ -20,7 +20,7 @@ class FillDataController extends Controller
         FillCountriesData::dispatch($service);
 
         return response()->json([
-            'message' => 'تم إرسال طلب لتعبئة البيانات في الخلفية.',
+            'message' => 'جاري العمل على تعبئة البيانات في الخلفية.',
             'status' => 'success',
         ]);
     }
