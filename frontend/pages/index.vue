@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="bg-gray-300">
-      <WorldMap
+      <w-map
         v-if="mapDataOptions"
         :map-data-options="mapDataOptions"
         :custom-tooltip-function="customTooltip"
@@ -24,6 +24,9 @@ import countriesAR from "@/data/countriesAR";
 
 export default {
   name: "IndexPage",
+  components: {
+    "w-map": () => process.client && import("@/components/WorldMap.vue"),
+  },
   data() {
     return {
       countriesSummary: {},
