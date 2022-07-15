@@ -13,7 +13,7 @@ git clone https://github.com/irakan/COVID19.git
 2. Change to the new folder
 
 ```
-cd covid19-spa
+cd COVID19
 ```
 
 3. Copy the .env-example to .env on directory /api
