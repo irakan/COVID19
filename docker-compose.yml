@@ -7,12 +7,15 @@ services:
     build:
       context: .
       dockerfile: ./docker/php-nginx/Dockerfile
-    volumes:
-      - ./api/storage:/app/storage
     ports:
       - "80:80"
     networks:
       - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
 
   frontend:
     container_name: frontend
@@ -37,6 +40,10 @@ services:
       - app-network
     volumes:
       - 'database:/var/lib/mysql'
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-p secret"]
+      retries: 5
+      timeout: 20s
 
   redis:
     container_name: redis
@@ -48,6 +55,10 @@ services:
       - app-network
     volumes:
       - 'redis:/var/lib/redis'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      timeout: 5s
+      retries: 3
 
 networks:
   app-network:
