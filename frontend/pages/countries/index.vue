@@ -3,7 +3,7 @@
     class="container mx-auto flex flex-col lg:h-full lg:p-5 px-8 py-4 relative"
   >
     <div
-      v-if="$auth.loggedIn"
+      v-show="$auth.loggedIn"
       class="flex justify-end items-center lg:mx-4 mb-3"
     >
       <NuxtLink
