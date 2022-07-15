@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import svgMap from "svgmap";
 import "svgmap/dist/svgMap.min.css";
 
 export default {
@@ -20,7 +19,6 @@ export default {
   data() {
     return {
       id: "svgMap",
-      map: null,
     };
   },
   mounted() {
@@ -29,7 +27,12 @@ export default {
   methods: {
     initMap() {
       let self = this;
-      this.map = new svgMap({
+
+      if (!process.client) return;
+
+      let svgMap = require("svgmap");
+
+      new svgMap({
         targetElementID: this.id,
         data: { ...this.mapDataOptions },
         onGetTooltip: function (tooltipDiv, countryID, countryValues) {
